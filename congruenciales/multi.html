@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script>
+        function calcularMultiplicativo() {
+            var x0 = $("#txtx0").val();
+            var a = $("#txta").val();
+            var M = $("#txtM").val();
+            var ciclo = $("#txtTama").val();
+
+            var total;
+            var total2;
+            var res;
+            var body = "";
+
+            for (var i = 0; i < ciclo; i++) {
+                total = (a * x0);
+                total2 = (total % M);
+                //convertir a cantidad de 9's de acuerdo el tamaño de x
+                //var tamNum = total2.toString().length
+                res = total2 / (parseInt(M) - 1);
+
+                body += "<tr><td>" + total2 + "</td>" +
+                    "<td>" + res + "</td><tr>";
+                x0 = total2;
+
+            }
+            $("#t_bodyMulti").html(body);
+        }
+
+        function calcularCongruencial() {
+            var x0 = $("#x0Con").val();
+            var a = $("#aCon").val();
+            var C = $("#cCon").val();
+            var M = $("#mCon").val();
+            var ciclo = $("#tamCon").val();
+
+            var tot;
+            var tot1;
+            var tot2;
+            var res;
+            var body = "";
+
+            for (var i = 0; i < ciclo; i++) {
+                tot = (a * x0) + parseInt(C);
+                tot2 = tot % M;
+                res = tot2 / M;
+
+                body += "<tr><td>" + tot2 + "</td>" +
+                    "<td>" + res + "</td><tr>";
+                x0 = tot2;
+
+            }
+            $("#t_bodyCon").html(body);
+        }
+    </script>
+    <title>multiplicativo</title>
+</head>
+
+<body>
+    <h2>Metodo Multiplicativo </h2>
+    <h4>Formula: <i>Xn</i> + 1 = <i>a</i> * <i>Xn</i> (mod <i>M</i>)</h4>
+    <h4><i>a</i> = valor constante</h4>
+    <h4><i>Xn</i> = Semilla</h4>
+    <input type="number" id="txta" min="1" placeholder="valor a">
+    <input type="number" id="txtx0" min="1" placeholder="valor x0">
+    <input type="number" id="txtM" min="1" placeholder="valor M">
+    <input type="number" id="txtTama" min="2" placeholder="tamaño a recorrer">
+    <input type="submit" id="btn" onclick="return calcularMultiplicativo(); " value="Calcular">
+    <br>
+    <hr>
+    <br>
+    <table border="1">
+        <thead>
+            <tr>
+                <td><b>resultado de X</b></td>
+                <td><b>resultado de R</b></td>
+
+            </tr>
+        </thead>
+        <tbody id="t_bodyMulti">
+
+        </tbody>
+    </table>
+
+    <h2>Metodo Congruencial Mixto Lineal</h2>
+    <h4>Formula: <i>Xn</i> + 1 = (<i>a</i> * <i>Xn</i> + <i>C</i>) mod <i>M</i></h4>
+    <h4><i>a</i> = Multiplicador</h4>
+    <h4><i>Xn</i> = Semilla</h4>
+    <h4><i>C</i> = Constante aditiva</h4>
+    <h4><i>M</i> = Modulo</h4>
+    <input type="number" id="aCon" min="1" placeholder="valor a">
+    <input type="number" id="x0Con" min="1" placeholder="valor x0">
+    <input type="number" id="cCon" min="1" placeholder="valor C">
+    <input type="number" id="mCon" min="1" placeholder="valor M">
+    <input type="number" id="tamCon" min="2" placeholder="tamaño a recorrer">
+    <input type="submit" id="btn" onclick="return calcularCongruencial(); " value="Calcular">
+    <br>
+    <hr>
+    <br>
+    <table border="1">
+        <thead>
+            <tr>
+                <td><b>resultado de X</b></td>
+                <td><b>resultado de R</b></td>
+
+            </tr>
+        </thead>
+        <tbody id="t_bodyCon">
+
+        </tbody>
+    </table>
+</body>
+
+</html>

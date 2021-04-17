@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+         <script>
+        function calcularMultiplicativo() {
+            var x0 = $("#txtx0").val();
+            var a = $("#txta").val();
+            var M = $("#txtM").val();
+            var ciclo = $("#txtTama").val();
+
+            var total;
+            var total2;
+            var res;
+            var body = "";
+
+            for (var i = 0; i < ciclo; i++) {
+                total = (a * x0);
+                total2 = (total % M);
+                //convertir a cantidad de 9's de acuerdo el tamaño de x
+                //var tamNum = total2.toString().length
+                res = total2 / (parseInt(M) - 1);
+
+                body += "<tr><td>" + total2 + "</td>" +
+                    "<td>" + res + "</td><tr>";
+                x0 = total2;
+
+            }
+            $("#t_bodyMulti").html(body);
+        }
+
+        function calcularCongruencial() {
+            var x0 = $("#x0Con").val();
+            var a = $("#aCon").val();
+            var C = $("#cCon").val();
+            var M = $("#mCon").val();
+            var ciclo = $("#tamCon").val();
+
+            var tot;
+            var tot1;
+            var tot2;
+            var res;
+            var body = "";
+
+            for (var i = 0; i < ciclo; i++) {
+                tot = (a * x0) + parseInt(C);
+                tot2 = tot % M;
+                res = tot2 / M;
+
+                body += "<tr><td>" + tot2 + "</td>" +
+                    "<td>" + res + "</td><tr>";
+                x0 = tot2;
+
+            }
+            $("#t_bodyCon").html(body);
+        }
+
+        function calcular() {
+            var x1 = $("#num1").val(),
+                x2 = $("#num2").val(),
+                x3 = $("#num3").val(),
+                x4 = $("#num4").val(),
+                x5 = $("#num5").val(),
+                rep = $("#rep").val(),
+                M = $("#m").val(),
+                body="";
+                
+            var lista = [x1, x2, x3, x4, x5];
+            
+            for (var i = 0; i < rep; i++) {
+                var tm = lista.length;
+                var xn = parseInt(lista[tm-1]);
+                
+                var k = parseInt(lista[i]);
+                var resul = (xn + k) % M;
+                var nines="";
+                for(var j=0; j < resul.toString().length; j++){
+                    nines += "1";
+                    //alert(nines);
+                }
+                if(nines == 1){
+                    nines="11";
+                    var resultado = resul / (99);
+                    lista.push(resul);
+                }else{
+                    var resultado = resul / (9 * nines);
+                    lista.push(resul);
+                }
+                
+
+                body += "<tr><td>" + xn + "</td>" +
+                    "<td>" + "("+xn+"+"+k+")"+"mod"+M + "</td>" +
+                    "<td>" + resul + "</td>" +
+                    "<td>" + "("+resul+"/"+(9 * nines)+")" + "</td>" +
+                    "<td>" + resultado + "</td><tr>";
+                
+            }
+            $("#t_body").html(body);
+        }
+    </script>
+</head>
+<body>
+	
+	<section>
+		<h3><br>Método Multiplicativo</h3><br>
+		
+		<h6>Formula: <i>Xn</i> + 1 = <i>a</i> * <i>Xn</i> (mod <i>M</i>)<br>
+    	<i>a</i> = valor constante<br>
+    	<i>Xn</i> = Semilla<br>
+    	<i>M</i> = Modulo</h6><br>
+
+	</section>
+	<section>
+		<h3>Método Congruencial Mixto Lineal</h3><br>
+		
+		<h6>Formula: <i>Xn</i> + 1 = (<i>a</i> * <i>Xn</i> + <i>C</i>) mod <i>M</i><br>
+    	<i>a</i> = Multiplicador<br>
+    	<i>Xn</i> = Semilla<br>
+    	<i>C</i> = Constante aditiva<br>
+    	<i>M</i> = Modulo</h6>
+	</section>
+	<section>
+		<h3><br>Método Aditivo</h3><br>
+		
+		<h6>Formula: <i>Xn</i> + 1 = (<i>Xn</i> + <i>Xn</i> - <i>K</i>) mod <i>M</i><br>
+
+		
+    	<i>Xn</i> = Semilla<br>
+    	<i>K</i> = Constante<br>
+    	<i>M</i> = Modulo</h6><br>
+	</section>
+
+<!--****************************************************************************************************************************-->
+	<section>
+		<br>
+		<input type="number" id="txta" min="1" placeholder="valor a">
+    <input type="number" id="txtx0" min="1" placeholder="valor x0"><br><br>
+    <input type="number" id="txtM" min="1" placeholder="valor M">
+    <input type="number" id="txtTama" min="2" placeholder="tamaño a recorrer"><br><br>
+    <input type="submit" id="btn" onclick="return calcularMultiplicativo(); " value="Calcular"><br><br>
+		
+		<center>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <td><b>&nbsp;Resultado de X&nbsp;</b></td>
+                <td><b>&nbsp;Resultado de R&nbsp;</b></td>
+
+            </tr>
+        </thead>
+        <tbody id="t_bodyMulti">
+
+        </tbody>
+    </table></center>
+
+	</section>
+	<section>
+		<br>
+		<input type="number" id="aCon" min="1" placeholder="valor a">
+    <input type="number" id="x0Con" min="1" placeholder="valor x0">
+    <input type="number" id="cCon" min="1" placeholder="valor C">
+    <input type="number" id="mCon" min="1" placeholder="valor M"><br><br>
+    <input type="number" id="tamCon" min="2" placeholder="tamaño a recorrer"><br>
+    <input type="submit" id="btn" onclick="return calcularCongruencial(); " value="Calcular"><br>
+		
+
+    <br><center>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <td><b>&nbsp;Resultado de X&nbsp;</b></td>
+                <td><b>&nbsp;Resultado de R&nbsp;</b></td>
+
+            </tr>
+        </thead>
+        <tbody id="t_bodyCon">
+
+        </tbody>
+    </table></center>
+	</section>
+	<section>
+		<br>
+	<input type="number" id="num1" placeholder="Valor X1">
+    <input type="number" id="num2" placeholder="Valor X2">
+    <input type="number" id="num3" placeholder="Valor X3">
+    <input type="number" id="num4" placeholder="Valor X4">
+    <input type="number" id="num5" placeholder="Valor X2">
+    <input type="number" id="m" placeholder="Valor M">
+    <input type="number" id="rep" placeholder="tamaño a recorrer"><br><br>
+    <input type="button" value="Calcular" onclick="calcular();">
+		
+		<br>
+		<center>
+			<table class="table table-striped table-hover" >
+        <thead>
+            <tr>
+                <td><b>Xn</b></td>
+                <td><b>Op1</b></td>
+                <td><b>Total</b></td>
+                <td><b>Op2</b></td>
+                <td><b>Pseudo-aleaorio</b></td>
+            </tr>
+        </thead>
+        <tbody id="t_body">
+
+        </tbody>
+    </table>
+		</center>
+	</section>
+</body>
+</html>

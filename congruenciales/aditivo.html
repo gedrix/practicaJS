@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/jquery.js"></script>
+    <script>
+        function calcular() {
+            var x1 = $("#num1").val(),
+                x2 = $("#num2").val(),
+                x3 = $("#num3").val(),
+                x4 = $("#num4").val(),
+                x5 = $("#num5").val(),
+                rep = $("#rep").val(),
+                M = $("#m").val(),
+                body="";
+                
+            var lista = [x1, x2, x3, x4, x5];
+            
+            for (var i = 0; i < rep; i++) {
+                var tm = lista.length;
+                var xn = parseInt(lista[tm-1]);
+                
+                var k = parseInt(lista[i]);
+                var resul = (xn + k) % M;
+                var nines="";
+                for(var j=0; j < resul.toString().length; j++){
+                    nines += "1";
+                    //alert(nines);
+                }
+                if(nines == 1){
+                    nines="11";
+                    var resultado = resul / (99);
+                    lista.push(resul);
+                }else{
+                    var resultado = resul / (9 * nines);
+                    lista.push(resul);
+                }
+                
+
+                body += "<tr><td>" + xn + "</td>" +
+                    "<td>" + "("+xn+"+"+k+")"+"mod"+M + "</td>" +
+                    "<td>" + resul + "</td>" +
+                    "<td>" + "("+resul+"/"+(9 * nines)+")" + "</td>" +
+                    "<td>" + resultado + "</td><tr>";
+                
+            }
+            $("#t_body").html(body);
+        }
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>Valor X1</h3> <input type="number" id="num1">
+    <h3>Valor X2</h3> <input type="number" id="num2">
+    <h3>Valor X3</h3> <input type="number" id="num3">
+    <h3>Valor X4</h3> <input type="number" id="num4">
+    <h3>Valor X5</h3> <input type="number" id="num5">
+    <h3>Valor M</h3> <input type="number" id="m">
+    <h3>Cantidad de Repeticiones</h3> <input type="number" id="rep">
+    <input type="button" value="CALCULAR" onclick="calcular();">
+    <table border="1">
+        <thead>
+            <tr>
+                <td><b>Valor Xn</b></td>
+                <td><b>operacion1</b></td>
+                <td><b>Total</b></td>
+                <td><b>operacion2</b></td>
+                <td><b>Pseudo-aleaorio</b></td>
+            </tr>
+        </thead>
+        <tbody id="t_body">
+
+        </tbody>
+    </table>
+</body>
+
+</html>

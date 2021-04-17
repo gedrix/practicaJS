@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <script>
+        
+
+        function calcular() {
+            var clientes = $("#clientes").val();
+            var llegadas = $("#llegadas").val();
+            var atendidos = $("#atendidos").val();
+            var mllegada, tservicio, tespera, rnd2, tatencion, tsalida, ac1, ac2;
+
+            for(i=0; i< clientes; i++) {
+                var rnd1 = Math.random(); //aleatorio1
+                rnd1 = Math.round(rnd1 * 100) / 100;
+
+                var rnd2 = Math.random(); //aleatorio 2
+                rnd2 = Math.round(rnd2 * 100) / 100;
+
+                var tl = ((-(Math.log(1-rnd1)))*(1/llegadas))*60;
+                tl = Math.round(tl * 100) / 100; // t llegada
+
+                var tatencion = ((-(Math.log(1-rnd1)))*(1/atendidos))*60;
+                tl = Math.round(tl * 100) / 100; // t atencion
+
+
+                if(i==0){
+                    mllegada = tl;
+                    ac1 = mllegada;
+                    tservicio = tl;
+                    tespera = tservicio - mllegada;
+                    tsalida = tatencion + tservicio;
+                    ac2 = tsalida;
+                }else{
+                    mllegada = tl+ac1;
+                    ac1 = mllegada;
+                    tservicio = ac2;
+                    tespera = tservicio - mllegada;
+                    tsalida = tatencion + tservicio;
+                    ac2 = tsalida;
+                }
+                
+                
+                
+                var html = "";
+                html += "<tr>"+
+                 "<td>" + i + "</td>"+
+                 "<td>" + rnd1 + "</td>"+
+                 "<td>" + tl + "</td>"+
+                 "<td>" + mllegada + "</td>"+
+                 "<td>" + tservicio + "</td>"+
+                 "<td>" + tespera + "</td>"+
+                 "<td>" + rnd2 + "</td>"+
+                 "<td>" + tatencion + "</td>"+
+                 "<td>" + tsalida + "</td>"+
+                "</tr>";
+                $("#tabla_tbody").append(html);
+            }
+        }
+
+    </script>
+
+
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" name="fileToUpload" id="inputFileServer" />
+    <button id="btn" onclick="return cambiarFile();">SUBIR</button>
+    <br>
+    <h2>SIMULACION: TEORIA DE COLAS</h2>
+    <input type="text" id="clientes" placeholder="# clientes">
+    <input type="text" id="llegadas" placeholder="# llegadas">
+    <input type="text" id="atendidos" placeholder="# atendidos">
+    <input type="button" name="calcular" id="calcular" onclick="return calcular();" value="CALCULAR">
+    <br>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>CLientes</th>
+                <th>RND 1</th>
+                <th>T. Llegada</th>
+                <th>M. Llegada</th>
+                <th>T. Servicio</th>
+                <th>T. Espera</th>
+                <th>RND 2</th>
+                <th>T. Atencion</th>
+                <th>T. Salida</th>
+            </tr>
+        </thead>
+        <tbody id="tabla_tbody">
+
+        </tbody>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>producto medio</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script>
+        function calcular() {
+            var Xi = $("#txtXi").val();
+            var Xj = $("#txtXj").val();
+            var ciclo = $("#txtRep").val();
+
+            var total;
+            var res;
+
+           
+            var body = "";
+
+            for (var i = 0; i < ciclo; i++) {
+                total = (Xi * Xj);
+
+                var nXi = Xi.length;
+                var nk = Xj.length;
+                var ntotal = total.toString().length;
+
+                if ((nXi % 2) == 0) {
+                    if ((ntotal % 2) == 0) {
+                        if ((nXi + 2) == ntotal)
+                            res = total.toString().substring(1, parseInt(ntotal) - 1);
+                        else
+                            res = total.toString().substring((nXi / 2), parseInt(ntotal) - (nXi / 2));
+                    } else {
+                        res = total.toString().substring((nXi / 2 - 1), parseInt(ntotal) - (nXi / 2));
+                    }
+                } else {
+                    if ((ntotal % 2) == 0) {
+                        res = total.toString().substring((nXi / 2), parseInt(ntotal) - (nXi / 2));
+                    } else {
+                        if ((nXi + 2) == ntotal)
+                            res = total.toString().substring(1, parseInt(ntotal) - 1);
+                        else
+                            res = total.toString().substring((nXi - (nXi / 2)), parseInt(ntotal) - (nXi / 2 - 1));
+                    }
+                }
+                var nRes = res.length;
+                body += "<tr><td>" + Xi + "</td>" +
+                    "<td>" + Xj + "</td>" +
+                    "<td>" + total + "</td>" +
+                    "<td>" + res + "</td>" +
+                    "<td>" + (res / Math.pow(10, nRes)) + "</td><tr>";
+
+                Xi = Xj;
+                Xj = res;
+            }
+
+            $("#t_body").html(body);
+
+            /*$("#tXi").html("tam Xi es: " + nXi);
+            $("#tK").html("tam constante es: " + nk);
+            $("#total").html("total es: " + total);
+            $("#tTotal").html("tam total es: " + ntotal);
+            $("#tres").html("el pseudoaleatorio es: " + res);*/
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Producto Medio </h1>
+    <h2>Por favor ingrese numeros con la misma cantidad de cifras</h2>
+    <input type="number" id="txtXi" min="100" placeholder="Xi">
+    <input type="number" id="txtXj" min="100" placeholder="Xj">
+    <input type="number" id="txtRep" min="2" placeholder="tamaño a recorrer">
+    <input type="submit" id="btn" onclick="return calcular(); " value="Calcular">
+    <br>
+    <hr>
+    <br>
+  
+
+    <table border="1">
+        <thead>
+            <tr>
+                <td><b>Valor Xi</b></td>
+                <td><b>Valor Xj</b></td>
+                <td><b>(Xi * Xj)</b></td>
+                <td><b>numero-aleaorio</b></td>
+                <td><b>Porcentaje</b></td>
+            </tr>
+        </thead>
+        <tbody id="t_body">
+
+        </tbody>
+    </table>
+</body>
+
+</html>
